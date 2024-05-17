@@ -16,6 +16,9 @@ document
       document.getElementById("login-error").innerText =
         "Invalid username or password";
     }
+
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
   });
 
 function initializeQuiz() {
@@ -203,6 +206,8 @@ function selectAnswer(e) {
   });
   nextButton.style.display = "block";
   clearInterval(timer);
+
+  startTimer(5);
 }
 
 function shhowScore() {

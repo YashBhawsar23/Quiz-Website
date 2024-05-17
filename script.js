@@ -1,3 +1,24 @@
+// Login Page
+document
+  .getElementById("login-form")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    // Simple validation for demo purposes
+    if (username === "admin" && password === "123") {
+      document.getElementById("login-page").style.display = "none";
+      document.getElementById("quiz-app").style.display = "block";
+    } else {
+      document.getElementById("login-error").innerText =
+        "Invalid username or password";
+    }
+  });
+
+//
+
 const questions = [
   {
     question: `What is the correct way to declare a variable in JavaScript?`,
@@ -87,9 +108,15 @@ const questions = [
     `,
     answers: [
       { text: "There is no difference.", correct: false },
-      { text: "=== checks for strict equality (value and type), while == only checks for value equality.", correct: true },
+      {
+        text: "=== checks for strict equality (value and type), while == only checks for value equality.",
+        correct: true,
+      },
       { text: "=== is for strings, == is for numbers.", correct: false },
-      { text: "== is for comparing objects, === is for primitives.", correct: false },
+      {
+        text: "== is for comparing objects, === is for primitives.",
+        correct: false,
+      },
     ],
   },
   {
@@ -97,12 +124,15 @@ const questions = [
 
     `,
     answers: [
-      { text: " A function that waits for a specific event to occur.", correct: true },
+      {
+        text: " A function that waits for a specific event to occur.",
+        correct: true,
+      },
       { text: "A variable that stores data.", correct: false },
       { text: "A way to loop through an object.", correct: false },
       { text: "A method for manipulating the DOM.", correct: false },
     ],
-  }
+  },
 ];
 
 const questionElement = document.getElementById("question");
@@ -177,26 +207,32 @@ function handleNextButton() {
     shhowScore();
   }
 }
-
+//
+function restartQuiz() {
+  score = 0;
+  currentQuestionIndex = 0;
+  document.getElementById("quiz-app").style.display = "none";
+  document.getElementById("login-page").style.display = "block";
+  document.getElementById("login-form").reset();
+  document.getElementById("login-error").innerText = "";
+}
+//
 nextButton.addEventListener("click", () => {
   if (currentQuestionIndex < questions.length) {
     handleNextButton();
   } else {
-    startQuiz();
+    // startQuiz();
+    restartQuiz();
   }
 });
 
-
-
 function shuffleQuestions() {
-    for (let i = questions.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [questions[i], questions[j]] = [questions[j], questions[i]];
-    }
+  for (let i = questions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [questions[i], questions[j]] = [questions[j], questions[i]];
   }
+}
 
-
-
-  shuffleQuestions();  
+shuffleQuestions();
 
 startQuiz();

@@ -11,11 +11,16 @@ document
     if (username === "admin" && password === "123") {
       document.getElementById("login-page").style.display = "none";
       document.getElementById("quiz-app").style.display = "block";
+      initializeQuiz();
     } else {
       document.getElementById("login-error").innerText =
         "Invalid username or password";
     }
   });
+
+function initializeQuiz() {
+  startQuiz(); // Start the quiz
+}
 
 //
 
@@ -138,9 +143,12 @@ const questions = [
 const questionElement = document.getElementById("question");
 const answerButtons = document.getElementById("answer-buttons");
 const nextButton = document.getElementById("next-btn");
+const timerElement = document.getElementById("time");
 
 let currentQuestionIndex = 0;
 let score = 0;
+let timeLeft;
+let timer;
 
 function startQuiz() {
   currentQuestionIndex = 0;
@@ -165,6 +173,8 @@ function showQuestion() {
     }
     button.addEventListener("click", selectAnswer);
   });
+
+  startTimer(60);
 }
 
 function resetState() {
@@ -172,6 +182,8 @@ function resetState() {
   while (answerButtons.firstChild) {
     answerButtons.removeChild(answerButtons.firstChild);
   }
+  clearInterval(timer);
+  timerElement.innerText = 60;
 }
 
 function selectAnswer(e) {
@@ -190,6 +202,7 @@ function selectAnswer(e) {
     button.disabled = true;
   });
   nextButton.style.display = "block";
+  clearInterval(timer);
 }
 
 function shhowScore() {
@@ -234,5 +247,20 @@ function shuffleQuestions() {
 }
 
 shuffleQuestions();
+
+function startTimer(seconds) {
+  timeLeft = seconds;
+  timerElement.innerText = timeLeft;
+
+  timer = setInterval(() => {
+    timeLeft--;
+    timerElement.innerText = timeLeft;
+
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      handleNextButton();
+    }
+  }, 1000);
+}
 
 startQuiz();

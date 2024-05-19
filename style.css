@@ -106,6 +106,10 @@ body {
 .btn:disabled {
   cursor: no-drop;
 }
+#timer {
+  color: red;
+  font-weight: 800;
+}
 
 #next-btn {
   background: #001e4d;

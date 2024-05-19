@@ -1,4 +1,3 @@
-// Login Page
 document
   .getElementById("login-form")
   .addEventListener("submit", function (event) {
@@ -25,9 +24,8 @@ function initializeQuiz() {
   startQuiz(); // Start the quiz
 }
 
-//
-
 const questions = [
+  // Array of question objects
   {
     question: `What is the correct way to declare a variable in JavaScript?`,
     answers: [
@@ -56,9 +54,7 @@ const questions = [
     ],
   },
   {
-    question: `What is the data type of the following: let x = true;
-
-    `,
+    question: `What is the data type of the following: let x = true;`,
     answers: [
       { text: "string", correct: false },
       { text: "number", correct: false },
@@ -67,9 +63,7 @@ const questions = [
     ],
   },
   {
-    question: `How do you loop through the elements of an array?;
-
-    `,
+    question: `How do you loop through the elements of an array?`,
     answers: [
       { text: "for loop", correct: true },
       { text: "while loop", correct: false },
@@ -78,9 +72,7 @@ const questions = [
     ],
   },
   {
-    question: `What method is used to convert a JavaScript object to a JSON string?;
-
-    `,
+    question: `What method is used to convert a JavaScript object to a JSON string?`,
     answers: [
       { text: "toString()", correct: false },
       { text: "toJSON()", correct: false },
@@ -89,20 +81,16 @@ const questions = [
     ],
   },
   {
-    question: `What is the scope of a variable declared with let?;
-
-    `,
+    question: `What is the scope of a variable declared with let?`,
     answers: [
       { text: "Global scope", correct: false },
-      { text: "Function scope", correct: true },
-      { text: "Block scope", correct: false },
+      { text: "Function scope", correct: false },
+      { text: "Block scope", correct: true },
       { text: "Both function and block scope", correct: false },
     ],
   },
   {
-    question: `How do you define a function in JavaScript?;
-
-    `,
+    question: `How do you define a function in JavaScript?`,
     answers: [
       { text: "function myFunction() { ... }", correct: true },
       { text: "def myFunction() { ... }", correct: false },
@@ -111,9 +99,7 @@ const questions = [
     ],
   },
   {
-    question: `What is the difference between == and === operators?;
-
-    `,
+    question: `What is the difference between == and === operators?`,
     answers: [
       { text: "There is no difference.", correct: false },
       {
@@ -128,12 +114,10 @@ const questions = [
     ],
   },
   {
-    question: `What is an event listener in JavaScript?;
-
-    `,
+    question: `What is an event listener in JavaScript?`,
     answers: [
       {
-        text: " A function that waits for a specific event to occur.",
+        text: "A function that waits for a specific event to occur.",
         correct: true,
       },
       { text: "A variable that stores data.", correct: false },
@@ -147,6 +131,7 @@ const questionElement = document.getElementById("question");
 const answerButtons = document.getElementById("answer-buttons");
 const nextButton = document.getElementById("next-btn");
 const timerElement = document.getElementById("time");
+const timerContainer = document.getElementById("timer");
 
 let currentQuestionIndex = 0;
 let score = 0;
@@ -157,6 +142,7 @@ function startQuiz() {
   currentQuestionIndex = 0;
   score = 0;
   nextButton.innerHTML = "Next";
+  shuffleQuestions();
   showQuestion();
 }
 
@@ -187,6 +173,7 @@ function resetState() {
   }
   clearInterval(timer);
   timerElement.innerText = 60;
+  timerContainer.style.display = "block"; // Ensure the timer container is visible
 }
 
 function selectAnswer(e) {
@@ -212,10 +199,11 @@ function selectAnswer(e) {
 
 function showScore() {
   resetState();
+  clearInterval(timer); // Clear any running timers
   questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
   nextButton.innerHTML = "Play Again";
   nextButton.style.display = "block";
-  timerElement.style.display = "none";
+  timerContainer.style.display = "none"; // Hide the entire timer container
 }
 
 function handleNextButton() {
@@ -226,7 +214,7 @@ function handleNextButton() {
     showScore();
   }
 }
-//
+
 function restartQuiz() {
   score = 0;
   currentQuestionIndex = 0;
@@ -234,13 +222,13 @@ function restartQuiz() {
   document.getElementById("login-page").style.display = "block";
   document.getElementById("login-form").reset();
   document.getElementById("login-error").innerText = "";
+  timerContainer.style.display = "block"; // Show the timer container again for the next quiz
 }
-//
+
 nextButton.addEventListener("click", () => {
   if (currentQuestionIndex < questions.length) {
     handleNextButton();
   } else {
-    // startQuiz();
     restartQuiz();
   }
 });
@@ -251,8 +239,6 @@ function shuffleQuestions() {
     [questions[i], questions[j]] = [questions[j], questions[i]];
   }
 }
-
-shuffleQuestions();
 
 function startTimer(seconds) {
   timeLeft = seconds;
@@ -268,3 +254,6 @@ function startTimer(seconds) {
     }
   }, 1000);
 }
+
+// Initial call to start the quiz when the page is loaded
+startQuiz();

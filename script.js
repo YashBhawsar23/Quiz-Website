@@ -234,6 +234,7 @@ function restartQuiz() {
   document.getElementById("login-page").style.display = "block";
   document.getElementById("login-form").reset();
   document.getElementById("login-error").innerText = "";
+  timerElement.style.display = "block";
 }
 //
 nextButton.addEventListener("click", () => {

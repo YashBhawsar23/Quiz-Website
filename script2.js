@@ -9,6 +9,7 @@ document
     // Simple validation for demo purposes
     if (username === "admin" && password === "123") {
       document.getElementById("login-page").style.display = "none";
+      document.querySelector(".login-details").style.display = "none";
       document.getElementById("quiz-app").style.display = "block";
       initializeQuiz();
     } else {
@@ -223,6 +224,7 @@ function restartQuiz() {
   document.getElementById("login-form").reset();
   document.getElementById("login-error").innerText = "";
   timerContainer.style.display = "block"; // Show the timer container again for the next quiz
+  document.querySelector(".login-details").removeAttribute("style");
 }
 
 nextButton.addEventListener("click", () => {
